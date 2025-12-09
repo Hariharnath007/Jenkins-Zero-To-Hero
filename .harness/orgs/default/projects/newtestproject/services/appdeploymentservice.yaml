@@ -1,0 +1,23 @@
+service:
+  name: app-deployment-service
+  identifier: appdeploymentservice
+  serviceDefinition:
+    type: Kubernetes
+    spec:
+      manifests:
+        - manifest:
+            identifier: springbootappmanifests
+            type: DeploymentRepo
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: account.Github
+                  gitFetchType: Branch
+                  paths:
+                    - java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests
+                  branch: main
+                  repoName: Jenkins-Zero-To-Hero
+  gitOpsEnabled: true
+  orgIdentifier: default
+  projectIdentifier: newtestproject
