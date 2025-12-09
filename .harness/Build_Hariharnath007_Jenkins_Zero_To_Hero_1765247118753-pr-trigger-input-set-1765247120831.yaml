@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_Hariharnath007_Jenkins_Zero_To_Hero_1765247118753-pr-trigger-input-set
+  identifier: Build_Hariharnath007_Jenkins_Zero_To_Hero_1765247118753prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: newtestproject
+  pipeline:
+    identifier: Build_Hariharnath007_Jenkins_Zero_To_Hero_1765247118753
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
