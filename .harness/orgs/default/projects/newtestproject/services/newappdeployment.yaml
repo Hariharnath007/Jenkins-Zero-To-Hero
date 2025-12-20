@@ -3,3 +3,34 @@ service:
   identifier: newappdeployment
   orgIdentifier: default
   projectIdentifier: newtestproject
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: newjavaapp
+            type: K8sManifest
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: account.Github
+                  gitFetchType: Branch
+                  paths:
+                    - java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests
+                  repoName: https://github.com/Hariharnath007/Jenkins-Zero-To-Hero/
+                  branch: main
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+              optionalValuesYaml: false
+      artifacts:
+        primary:
+          primaryArtifactRef: <+input>
+          sources:
+            - spec:
+                connectorRef: account.harnessImage
+                imagePath: https://hub.docker.com/repositories/hariharnthkumar
+                tag: <+input>
+                digest: ""
+              identifier: newjavaapp
+              type: DockerRegistry
+    type: Kubernetes
