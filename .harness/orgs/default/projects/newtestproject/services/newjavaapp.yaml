@@ -1,0 +1,5 @@
+service:
+  name: new-java-app
+  identifier: newjavaapp
+  orgIdentifier: default
+  projectIdentifier: newtestproject
