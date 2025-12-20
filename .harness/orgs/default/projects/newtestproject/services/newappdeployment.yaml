@@ -1,0 +1,5 @@
+service:
+  name: new-app-deployment
+  identifier: newappdeployment
+  orgIdentifier: default
+  projectIdentifier: newtestproject
