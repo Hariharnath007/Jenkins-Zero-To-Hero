@@ -1,0 +1,57 @@
+pipeline:
+  name: new-app-pipeline
+  identifier: newapppipeline
+  projectIdentifier: newtestproject
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.Github
+        repoName: java-maven-sonar-argocd-helm-k8s
+        build: <+input>
+  stages:
+    - stage:
+        name: build
+        identifier: build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          caching:
+            enabled: true
+            override: false
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: install dependencies
+                  identifier: install_dependencies
+                  spec:
+                    shell: Bash
+                    command: cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && sudo apt install maven -y
+              - step:
+                  type: Run
+                  name: build app
+                  identifier: build_app
+                  spec:
+                    shell: Bash
+                    command: cd java-maven-sonar-argocd-helm-k8s/spring-boot-app && mvn clean package
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: account.harnessImage
+                    repo: " hariharnthkumar/ultimate-harness-cicd"
+                    tags:
+                      - 1.0.2
+                    dockerfile: java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile
+                    baseImageConnectorRefs:
+                      - account.harnessImage
